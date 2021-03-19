@@ -1,0 +1,34 @@
+#################################################
+#
+#################################################
+version: '2'
+services:
+  ntp-server:
+    tty: true
+    image: registry.cn-shenzhen.aliyuncs.com/risinghf/ntp:v5.0         
+    container_name: ntp-server
+    hostname: ntp-server
+    expose:
+      - "123"
+    environment:
+      - NODE_TYPE=server
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    labels:
+      io.rancher.container.pull_image: always
+      io.rancher.scheduler.affinity:host_label: cdm.role.ntp=true
+      io.rancher.scheduler.affinity:container_label_ne: io.rancher.stack_service.name=$${stack_name}/$${service_name}
+  ntp-client:
+    tty: true
+    image: registry.cn-shenzhen.aliyuncs.com/risinghf/ntp:v5.0         
+    expose:
+      - "123"
+    depends_on:
+      - ntp-server
+    environment:
+      - NODE_TYPE=client
+      - NTP_SERVER_HOSTNAME=ntp-server
+    labels:
+      io.rancher.container.pull_image: always
+      io.rancher.scheduler.affinity:host_label: cdm.role.ntp=true
+      io.rancher.scheduler.affinity:container_label_ne: io.rancher.stack_service.name=$${stack_name}/$${service_name}
