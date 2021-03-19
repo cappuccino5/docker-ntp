@@ -3,12 +3,12 @@
 
 # image build
 ```shell
-docker image build -t fino-cdm-ntp:v2.0
+docker image build -t docker image build -t registry.cn-shenzhen.aliyuncs.com/risinghf/ntp:v0.4 .
 ```
 
 # run
 ```shell
-docker run   --rm -it fino-cdm-ntp:v2.0
+docker run   --rm -it docker image build -t registry.cn-shenzhen.aliyuncs.com/risinghf/ntp:v0.4 
 ```
 
 # run cluster
