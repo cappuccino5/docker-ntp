@@ -7,8 +7,10 @@ COPY initfiles/init.sh /opt/cdm/
 COPY initfiles/sync.cnf /opt/cdm/
 RUN chmod a+x /opt/cdm/init.sh
 RUN apt-get update && apt-get install -y ntp
+
+RUN apt-get install -y net-tools
+RUN apt-get install -y systemd
 RUN apt-get install -y cron
-
+RUN apt-get install -y ntpstat
 EXPOSE 123/udp
-
 CMD ["sh","-c","/opt/cdm/init.sh* && bash"]

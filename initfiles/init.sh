@@ -23,7 +23,8 @@ else
     echo "server ${NTP_SERVER_HOSTNAME} prefer" >> /etc/ntp.conf
     echo "restrict ${NTP_SERVER_HOSTNAME} " >> /etc/ntp.conf
 fi
+service ntp restart
 #/etc/init.d/ntp restart
-/usr/sbin/ntpd -d
+#/usr/sbin/ntpd -d
 service cron restart
 crontab /opt/cdm/sync.cnf

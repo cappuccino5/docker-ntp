@@ -1,26 +1,27 @@
 #################################################
 #
 #################################################
-version: '2'
+version: '3'
 services:
   ntp-server:
     tty: true
-    image: registry.cn-shenzhen.aliyuncs.com/risinghf/ntp:v5.0         
+    image: registry.cn-shenzhen.aliyuncs.com/risinghf/ntp:v0.4
     container_name: ntp-server
     hostname: ntp-server
-    expose:
-      - "123"
+    ports:
+      - 123:123/udp
     environment:
       - NODE_TYPE=server
     volumes:
       - /etc/localtime:/etc/localtime:ro
+      - /run/dbus/system_bus_socket:/run/dbus/system_bus_socket:ro
     labels:
       io.rancher.container.pull_image: always
       io.rancher.scheduler.affinity:host_label: cdm.role.ntp=true
       io.rancher.scheduler.affinity:container_label_ne: io.rancher.stack_service.name=$${stack_name}/$${service_name}
   ntp-client:
     tty: true
-    image: registry.cn-shenzhen.aliyuncs.com/risinghf/ntp:v5.0         
+    image: registry.cn-shenzhen.aliyuncs.com/risinghf/ntp:v0.4         
     expose:
       - "123"
     depends_on:
